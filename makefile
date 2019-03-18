@@ -12,7 +12,7 @@ PGID       := $(shell id -g)# gid 100(users) usually pre exists
 
 DOCKERSRC := $(OPSYS)-glibc#
 DOCKEREPO := $(OPSYS)-$(SVCNAME)
-IMAGETAG  := $(USERNAME)/$(DOCKEREPO):$(ARCH)
+IMAGETAG  := $(USERNAME)/$(DOCKEREPO):$(ARCH)_esr_52
 
 CNTNAME   := $(SVCNAME)# name for container name : docker_name, hostname : name
 
