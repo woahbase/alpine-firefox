@@ -16,12 +16,12 @@ RUN set -xe \
         mesa-gl mesa-dri-swrast \
         pulseaudio udev \
         libstdc++ libgcc dbus-x11 \
-        firefox-esr \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk add --no-cache --purge -u \
         alsa-plugins-pulse \
+        firefox \
     && addgroup pulse \
     && adduser alpine audio \
     && adduser alpine video \

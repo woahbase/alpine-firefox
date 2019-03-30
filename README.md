@@ -1,7 +1,7 @@
 [![build status][251]][232] [![commit][255]][231] [![version:x86_64][256]][235] [![size:x86_64][257]][235] [![version:armhf][258]][236] [![size:armhf][259]][236]
 
 ## [Alpine-Firefox][234]
-#### Container for Alpine Linux + Firefox Extended Support Release
+#### Container for Alpine Linux + Firefox
 ---
 
 This [image][233] containerizes the [Firefox][135] browser.
@@ -12,6 +12,11 @@ the [s6][133] init system [overlayed][134] in it.
 The image is tagged respectively for the following architectures,
 * ~~**armhf**~~
 * **x86_64** (retagged as the `latest` )
+
+Also, 
+* **x86_64_esr** The extended support release version (retagged as `latest_esr` )
+* **x86_64_esr_52** Firefox 52 (retagged as `latest_esr_52`, no updates )
+
 
 ~~**armhf** builds have embedded binfmt_misc support and contain the~~
 ~~[qemu-user-static][105] binary that allows for running it also inside~~
