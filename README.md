@@ -13,7 +13,7 @@ The image is tagged respectively for the following architectures,
 * ~~**armhf**~~
 * **x86_64** (retagged as the `latest` )
 
-Also, 
+Also,
 * **x86_64_esr** The extended support release version (retagged as `latest_esr` )
 * **x86_64_esr_52** Firefox 52 (retagged as `latest_esr_52`, no updates )
 
@@ -58,7 +58,11 @@ Before you run..
   the values at runtime and pass the `-u alpine` if need be. (run
   `id` in your terminal to see your own `PUID`/`PGID` values.)
 
-* Optionally uses `--net=host`.
+* Uses `--cap-add=SYS_ADMIN` and optionally `--net=host`.
+
+* If docker is not allowed to access the local X-server running on
+  the host, make sure `DISPLAY` is exported and also, might need
+  to run `xhost +local:docker`.
 
 * To preserve data mount the `/home/alpine` dir in your local. By
   default mounts `$PWD/data`.
@@ -114,14 +118,14 @@ docker restart docker_firefox
 Get a shell inside a already running container,
 
 ```
-# make shell
+# make debug
 docker exec -it docker_firefox /bin/bash
 ```
 
 set user or login as root,
 
 ```
-# make rshell
+# make rdebug
 docker exec -u root -it docker_firefox /bin/bash
 ```
 
@@ -171,11 +175,9 @@ for other architectures.]
 docker build --rm --compress --force-rm \
   --no-cache=true --pull \
   -f ./Dockerfile_x86_64 \
-  --build-arg ARCH=x86_64 \
-  --build-arg DOCKERSRC=alpine-glibc \
+  --build-arg DOCKERSRC=woahbase/alpine-glibc:x86_64 \
   --build-arg PGID=1000 \
   --build-arg PUID=1000 \
-  --build-arg USERNAME=woahbase \
   -t woahbase/alpine-firefox:x86_64 \
   .
 ```

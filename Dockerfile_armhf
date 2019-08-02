@@ -1,8 +1,6 @@
-ARG ARCH=frommakefile
 ARG DOCKERSRC=frommakefile
-ARG USERNAME=frommakefile
 #
-FROM ${USERNAME}/${DOCKERSRC}:${ARCH}
+FROM ${DOCKERSRC}
 #
 ARG PUID=1001
 ARG PGID=1001
@@ -10,6 +8,7 @@ ARG PGID=1001
 RUN set -xe \
     && addgroup -g ${PGID} -S alpine \
     && adduser -u ${PUID} -G alpine -h /home/alpine -D alpine \
+    && addgroup pulse \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk add --no-cache --purge -uU \
@@ -19,7 +18,6 @@ RUN set -xe \
         pulseaudio udev \
         firefox-esr \
         libstdc++ libgcc dbus-x11 \
-    && addgroup pulse \
     && adduser alpine audio \
     && adduser alpine video \
     && adduser alpine pulse \
