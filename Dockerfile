@@ -27,6 +27,7 @@ RUN set -xe \
         alsa-plugins-pulse \
         alsa-utils \
         curl \
+        ca-certificates \
         dbus-x11 \
         ffmpeg-libs \
         icu-libs \
