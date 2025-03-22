@@ -30,7 +30,7 @@ TESTCMD   := \
 	geckodriver --version; \
 	#
 
-# repo v3.19 has no build for armv6
+# repo v3.20 has no build for armv6
 SKIP_armhf  := 1
 # -- }}}
 

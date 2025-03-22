@@ -5,7 +5,7 @@ ARG IMAGEBASE=frommakefile
 FROM ${IMAGEBASE}
 #
 # refer to https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-ARG GECKVERS=0.34.0
+ARG GECKVERS=0.35.0
 ARG TARGETPLATFORM
 #
 RUN set -xe \
@@ -13,7 +13,7 @@ RUN set -xe \
 #
     # # if needed, use an older repository for an older version, e.g.
     # # make sure geckodriver version is compatible with said version
-    && REPO=3.19 \
+    && REPO=3.20 \
     && { \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
@@ -57,7 +57,7 @@ RUN set -xe \
         firefox-intl \
         # npapi unavailable since v3.14
         # firefox-npapi \
-        # geckodriver available since v3.20
+        # geckodriver available since v3.20 but stuck at 0.34.0 as of 20250322
         # geckodriver \
 #
 # add geckodriver binary
@@ -71,6 +71,9 @@ RUN set -xe \
             # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
             ;; \
         "linux/arm"|"linux/arm32"|"linux/arm/v7"|"linux/armhf") \
+            # no newer prebuilt binaries available as of 20250322
+            # pin version to 0.34.0 for now to keep it testable
+            GECKVERS=0.34.0; \
             GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-armv7l.tar.gz"; \
             ;; \
         # "linux/arm/v6"|"linux/armel") \
