@@ -5,7 +5,7 @@ ARG IMAGEBASE=frommakefile
 FROM ${IMAGEBASE}
 #
 # refer to https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-ARG GECKVERS=0.35.0
+ARG GECKVERS=0.34.0
 ARG TARGETPLATFORM
 #
 RUN set -xe \
@@ -67,8 +67,8 @@ RUN set -xe \
             ;; \
         "linux/arm64"|"linux/arm64/v8"|"linux/arm/v8") \
             # mozilla started providing aarch64 builds since v0.32.0
-            # GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
-            GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
+            GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
+            # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
             ;; \
         "linux/arm"|"linux/arm32"|"linux/arm/v7"|"linux/armhf") \
             GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-armv7l.tar.gz"; \
