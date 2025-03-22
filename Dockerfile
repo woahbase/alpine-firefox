@@ -90,7 +90,7 @@ RUN set -xe \
         "linux/arm"|"linux/arm32"|"linux/arm/v7"|"linux/armhf") \
             # 0.35.0 available in v3.21 repos as of 20250322
             # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-armv7l.tar.gz"; \
-            apk add --no-cache -U geckodriver;
+            apk add --no-cache -U geckodriver; \
             ;; \
         # "linux/arm/v6"|"linux/armel") \
         #     GECKODRIVER_URL="N/A"; \
