@@ -13,7 +13,7 @@ RUN set -xe \
 #
     # # if needed, use an older repository for an older version, e.g.
     # # make sure geckodriver version is compatible with said version
-    && REPO=3.15 \
+    && REPO=3.16 \
     && { \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
