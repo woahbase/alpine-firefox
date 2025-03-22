@@ -67,7 +67,7 @@ RUN set -xe \
     && case ${TARGETPLATFORM} in \
         "linux/amd64"|"linux/x86-64"|"linux/x86_64") \
             GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
-            && curl -jSL\
+            curl -jSL\
                 -o /tmp/geckodriver.tar.gz \
                 "${GECKODRIVER_URL}" \
             && tar \
@@ -79,7 +79,7 @@ RUN set -xe \
             # mozilla started providing aarch64 builds since v0.32.0
             GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
             # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
-            && curl -jSL\
+            curl -jSL\
                 -o /tmp/geckodriver.tar.gz \
                 "${GECKODRIVER_URL}" \
             && tar \
