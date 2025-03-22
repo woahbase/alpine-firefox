@@ -5,7 +5,7 @@ ARG IMAGEBASE=frommakefile
 FROM ${IMAGEBASE}
 #
 # refer to https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-ARG GECKVERS=0.33.0
+ARG GECKVERS=0.34.0
 ARG TARGETPLATFORM
 #
 RUN set -xe \
@@ -13,7 +13,7 @@ RUN set -xe \
 #
     # # if needed, use an older repository for an older version, e.g.
     # # make sure geckodriver version is compatible with said version
-    && REPO=3.17 \
+    && REPO=3.18 \
     && { \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
@@ -53,6 +53,8 @@ RUN set -xe \
         zlib-dev \
 #
         firefox \
+        # intl icu-data available since v3.18
+        firefox-intl \
         # npapi unavailable since v3.14
         # firefox-npapi \
         # geckodriver available since v3.20
