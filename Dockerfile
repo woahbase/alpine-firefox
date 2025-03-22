@@ -5,14 +5,15 @@ ARG IMAGEBASE=frommakefile
 FROM ${IMAGEBASE}
 #
 # refer to https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-ARG GECKVERS=0.30.0
+ARG GECKVERS=0.31.0
 ARG TARGETPLATFORM
 #
 RUN set -xe \
     && addgroup pulse \
 #
     # # if needed, use an older repository for an older version, e.g.
-    && REPO=3.14 \
+    # # make sure geckodriver version is compatible with said version
+    && REPO=3.15 \
     && { \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
         echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
@@ -53,7 +54,7 @@ RUN set -xe \
 #
         firefox \
         # npapi unavailable since v3.14
-        firefox-npapi \
+        # firefox-npapi \
         # geckodriver available since v3.20
         # geckodriver \
 #
