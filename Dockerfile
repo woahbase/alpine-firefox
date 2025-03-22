@@ -5,7 +5,7 @@ ARG IMAGEBASE=frommakefile
 FROM ${IMAGEBASE}
 #
 # refer to https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-ARG GECKVERS=0.35.0
+ARG GECKVERS=0.36.0
 ARG TARGETPLATFORM
 #
 RUN set -xe \
@@ -13,16 +13,16 @@ RUN set -xe \
 #
     # # if needed, use an older repository for an older version, e.g.
     # # make sure geckodriver version is compatible with said version
-    && REPO=3.20 \
-    && { \
-        echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
-        echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
-    } > /tmp/repo${REPO} \
-    && apk add --no-cache \
-        --repositories-file "/tmp/repo${REPO}" \
+    # && REPO=3.20 \
+    # && { \
+    #     echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
+    #     echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
+    # } > /tmp/repo${REPO} \
+    # && apk add --no-cache \
+    #     --repositories-file "/tmp/repo${REPO}" \
 #
-    # # or get the current available packages with
-    # && apk add --no-cache --purge -uU \
+    # or get the current available packages with
+    && apk add --no-cache --purge -uU \
         adwaita-icon-theme \
         # adwaita-gtk2-theme \
         alsa-plugins-pulse \
