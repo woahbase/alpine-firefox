@@ -13,13 +13,12 @@ RUN set -xe \
 #
     # # if needed, use an older repository for an older version, e.g.
     # # make sure geckodriver version is compatible with said version
-    # && REPO=3.20 \
-    # && { \
-    #     echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/main"; \
-    #     echo "http://dl-cdn.alpinelinux.org/alpine/v${REPO}/community"; \
-    # } > /tmp/repo${REPO} \
+    # && { REPO=v3.21; \
+    #     echo "http://dl-cdn.alpinelinux.org/alpine/${REPO}/main"; \
+    #     echo "http://dl-cdn.alpinelinux.org/alpine/${REPO}/community"; \
+    # } > /tmp/repo \
     # && apk add --no-cache \
-    #     --repositories-file "/tmp/repo${REPO}" \
+    #     --repositories-file /tmp/repo \
 #
     # or get the current available packages with
     && apk add --no-cache --purge -uU \
@@ -58,44 +57,54 @@ RUN set -xe \
         # npapi unavailable since v3.14
         # firefox-npapi \
         # # geckodriver available since v3.20
-        # # but stuck at 0.35.0 in v3.21 repos as of 20250322
-        # # prefer mozilla's binaries except for armv7
-        # # subject to change when alpinelinux catches up
-        # geckodriver \
+        # # enable geckodriver now that alpinelinux has caught up to latest version released
+        geckodriver \
 #
-# add geckodriver binary
-    && case ${TARGETPLATFORM} in \
-        "linux/amd64"|"linux/x86-64"|"linux/x86_64") \
-            GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
-            curl -jSL\
-                -o /tmp/geckodriver.tar.gz \
-                "${GECKODRIVER_URL}" \
-            && tar \
-                -zxf /tmp/geckodriver.tar.gz \
-                -C /usr/local/bin \
-            && chmod +x /usr/local/bin/geckodriver \
-            ;; \
-        "linux/arm64"|"linux/arm64/v8"|"linux/arm/v8") \
-            # mozilla started providing aarch64 builds since v0.32.0
-            GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
-            # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
-            curl -jSL\
-                -o /tmp/geckodriver.tar.gz \
-                "${GECKODRIVER_URL}" \
-            && tar \
-                -zxf /tmp/geckodriver.tar.gz \
-                -C /usr/local/bin \
-            && chmod +x /usr/local/bin/geckodriver \
-            ;; \
-        "linux/arm"|"linux/arm32"|"linux/arm/v7"|"linux/armhf") \
-            # 0.35.0 available in v3.21 repos as of 20250322
-            # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-armv7l.tar.gz"; \
-            apk add --no-cache -U geckodriver; \
-            ;; \
-        # "linux/arm/v6"|"linux/armel") \
-        #     GECKODRIVER_URL="N/A"; \
-        #     ;; \
-       esac \
+# # add geckodriver binary
+#     && case ${TARGETPLATFORM} in \
+#         "linux/amd64"|"linux/x86-64"|"linux/x86_64") \
+#             GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux64.tar.gz"; \
+#             curl -jSL\
+#                 -o /tmp/geckodriver.tar.gz \
+#                 "${GECKODRIVER_URL}" \
+#             && tar \
+#                 -zxf /tmp/geckodriver.tar.gz \
+#                 -C /usr/local/bin \
+#             && chmod +x /usr/local/bin/geckodriver \
+#             ;; \
+#         "linux/386") \
+#             GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux32.tar.gz"; \
+#             curl -jSL\
+#                 -o /tmp/geckodriver.tar.gz \
+#                 "${GECKODRIVER_URL}" \
+#             && tar \
+#                 -zxf /tmp/geckodriver.tar.gz \
+#                 -C /usr/local/bin \
+#             && chmod +x /usr/local/bin/geckodriver \
+#             ;; \
+#         "linux/arm64"|"linux/arm64/v8"|"linux/arm/v8") \
+#             # mozilla started providing aarch64 builds since v0.32.0
+#             GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
+#             # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-aarch64.tar.gz"; \
+#             curl -jSL\
+#                 -o /tmp/geckodriver.tar.gz \
+#                 "${GECKODRIVER_URL}" \
+#             && tar \
+#                 -zxf /tmp/geckodriver.tar.gz \
+#                 -C /usr/local/bin \
+#             && chmod +x /usr/local/bin/geckodriver \
+#             ;; \
+#         "linux/arm"|"linux/arm32"|"linux/arm/v7"|"linux/armhf" \
+#         "linux/loong64"|"linux/ppc64le"|"linux/riscv64"|"linux/s390x" \
+#         ) \
+#             # 0.35.0 available in v3.21 repos as of 20250322
+#             # GECKODRIVER_URL="https://github.com/jamesmortensen/geckodriver-arm-binaries/releases/download/v${GECKVERS}/geckodriver-v${GECKVERS}-linux-armv7l.tar.gz"; \
+#             apk add --no-cache -U geckodriver; \
+#             ;; \
+#         # "linux/arm/v6"|"linux/armel") \
+#         #     GECKODRIVER_URL="N/A"; \
+#         #     ;; \
+#        esac \
 #
     && apk del --purge curl \
     && rm -rf /var/cache/apk/* /tmp/*
@@ -107,4 +116,5 @@ VOLUME /home/${S6_USER:-alpine}/ /home/${S6_USER:-alpine}/Downloads/
 # WORKDIR /home/${S6_USER:-alpine}/
 #
 ENTRYPOINT ["/usershell"]
+#
 CMD ["/usr/bin/firefox"]
